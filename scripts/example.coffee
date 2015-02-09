@@ -29,7 +29,7 @@ module.exports = (robot) ->
       robot.brain.set('shoda_count', count + 1)
     setTimeout ->
       robot.brain.set('shoda_count', 0)
-      , 60000
+    , 60000
 
   robot.hear /ダレカタスケテー/i, (msg) ->
     msg.send "チョットマッテテー"
