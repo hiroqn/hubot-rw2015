@@ -10,16 +10,17 @@
 
 module.exports = (robot) ->
 
-  robot.hear /.*ぞい.*/i, (msg) ->
+  robot.hear /ぞい/i, (msg) ->
     msg.send "ぞい"
-  robot.hear /.*庄田.*/i, (msg) ->
-    msg.send "「就活中に大きく影響を受けた」ベンチャー名物人事\n http://careerpark.jp/19002?page=4"
+  robot.hear /庄田[^(さん)]?/i, (msg) ->
+    msg.send "さんをつけろよデコ助野郎"
   robot.respond /photo(?: bomb (\d+))?/, (msg) ->
     count = parseInt(msg.match[1], 10) || 1
     for i in [1..count]
       index = Math.ceil(Math.random() * 13)
       msg.send "https://dl.dropboxusercontent.com/u/11497352/shoda/#{index}.jpg"
-
+  robot.adapter.on 'connected', () ->
+    robot.send room: 'hubot-dev', "ちょっと再起動してたわ。またスクリプト読み込んでな"
   #
   # robot.respond /open the (.*) doors/i, (msg) ->
   #   doorType = msg.match[1]
