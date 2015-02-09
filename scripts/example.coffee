@@ -20,6 +20,17 @@ module.exports = (robot) ->
       index = Math.ceil(Math.random() * 13)
       msg.send "https://dl.dropboxusercontent.com/u/11497352/shoda/#{index}.jpg"
 
+  robot.hear /(shoda|庄田)/, (msg) ->
+    count = robot.brain.get('shoda_count') || 0
+    if count >= 10
+      msg.send 'お前ら俺で遊びすぎやろ！！'
+      robot.brain.set('shoda_count', 0)
+    else
+      robot.brain.set('shoda_count', count + 1)
+    setTimeout ->
+      robot.brain.set('shoda_count', 0)
+      , 60000
+
   robot.hear /ダレカタスケテー/i, (msg) ->
     msg.send "チョットマッテテー"
   robot.hear /ラブライブ/i, (msg) ->
