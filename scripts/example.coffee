@@ -12,8 +12,8 @@ module.exports = (robot) ->
 
   robot.hear /ぞい/i, (msg) ->
     msg.send "ぞい"
-  robot.hear /庄田[^(さん)]?/i, (msg) ->
-    msg.send "さんをつけろよデコ助野郎"
+  robot.hear /庄田(.*)/, (msg) ->
+    msg.send "さんをつけろよデコ助野郎" unless msg.match[1].match /^(さん|様)/
   robot.respond /photo(?: bomb (\d+))?/, (msg) ->
     count = parseInt(msg.match[1], 10) || 1
     for i in [1..count]
