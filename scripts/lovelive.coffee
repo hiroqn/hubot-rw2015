@@ -1,5 +1,3 @@
-require './image_me'
-
 module.exports = (robot) ->
   robot.hear /ラブライブ/i, (msg) ->
     imageMe msg, "ラブライブ", true, (url) ->
