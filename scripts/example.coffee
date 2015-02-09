@@ -19,6 +19,29 @@ module.exports = (robot) ->
     for i in [1..count]
       index = Math.ceil(Math.random() * 13)
       msg.send "https://dl.dropboxusercontent.com/u/11497352/shoda/#{index}.jpg"
+
+  robot.hear /ダレカタスケテー/i, (msg) ->
+    msg.send "チョットマッテテー"
+  robot.hear /ラブライブ/i, (msg) ->
+    imageMe msg, "ラブライブ", true, (url) ->
+      msg.send url
+ # hubot-google-images の関数をとりあえずコピペした 
+ # 他に方法があったら教えてください
+ imageMe = (msg, query, animated, faces, cb) ->
+  cb = animated if typeof animated == 'function'
+  cb = faces if typeof faces == 'function'
+  q = v: '1.0', rsz: '8', q: query, safe: 'active'
+  q.imgtype = 'animated' if typeof animated is 'boolean' and animated is true
+  q.imgtype = 'face' if typeof faces is 'boolean' and faces is true
+  msg.http('http://ajax.googleapis.com/ajax/services/search/images')
+    .query(q)
+    .get() (err, res, body) ->
+      images = JSON.parse(body)
+      images = images.responseData?.results
+      if images?.length > 0
+        image  = msg.random images
+        cb "#{image.unescapedUrl}#.png"
+
   robot.adapter.on 'connected', () ->
     robot.send room: 'hubot-dev', "ちょっと再起動してたわ。またスクリプト読み込んでな"
   #
